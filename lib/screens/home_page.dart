@@ -10,52 +10,72 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     bottomNavigationBar: BottomAppBar(
-     
+      bottomNavigationBar: BottomAppBar(
         color: Colors.white,
-        
+
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-              onPressed: (){},
-              icon: Icon(Icons.home_outlined,size: 30,color: Colors.black45,)
+              onPressed: () {},
+              icon: Icon(Icons.home_outlined, size: 30, color: Colors.black45),
             ),
             IconButton(
-              onPressed: () =>(){},
-            icon: Icon(Icons.notifications_outlined,size: 30,color: Colors.black45)
+              onPressed: () => () {},
+              icon: Icon(
+                Icons.notifications_outlined,
+                size: 30,
+                color: Colors.black45,
+              ),
             ),
             IconButton(
-              onPressed: () => (){},
-              icon: Icon(Icons.receipt_outlined,size: 30,color: Colors.black45)
+              onPressed: () => () {},
+              icon: Icon(
+                Icons.receipt_outlined,
+                size: 30,
+                color: Colors.black45,
+              ),
             ),
             IconButton(
-              onPressed: () =>(){},
-             icon: Icon(Icons.person_outline_outlined,size: 30,color: Colors.black45)
+              onPressed: () => () {},
+              icon: Icon(
+                Icons.person_outline_outlined,
+                size: 30,
+                color: Colors.black45,
+              ),
             ),
           ],
         ),
-     ),
+      ),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(70),
         child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
           child: AppBar(
             centerTitle: true,
-            leading: CircleAvatar(
-              radius: 20,
-              foregroundImage: AssetImage(
-                "assets/images/9a01074dac893c1d51c30d88b1726b28331ca570.png",
+            leading: Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(shape: BoxShape.circle),
+              child: ClipOval(
+                child: Image.asset(
+                  'assets/images/9a01074dac893c1d51c30d88b1726b28331ca570.png',
+                  height: 80,
+                  width: 80,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             title: Center(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text("Men", style: TextStyle(fontSize: 18)),
-                  SizedBox(width: 4),
-                  SvgPicture.asset("assets/icons/arrowdown2.svg", height: 18),
-                ],
+              child: Container(
+                decoration: BoxDecoration(color: Colors.grey),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text("Men", style: TextStyle(fontSize: 18)),
+                    SizedBox(width: 4),
+                    SvgPicture.asset("assets/icons/arrowdown2.svg", height: 18),
+                  ],
+                ),
               ),
             ),
             actions: [
@@ -111,42 +131,55 @@ class HomePage extends StatelessWidget {
                     "Categories",
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
                   ),
-                   TextButton(
+                  TextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder:(ctx) => CategoriesScreen()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (ctx) => CategoriesScreen()),
+                      );
                     },
-                    child: Text('See All', style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.normal)),
+                    child: Text(
+                      'See All',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
                   ),
                 ],
               ),
               SizedBox(height: 16),
-              Row(
-                children: [
-                  CategorieItem(
-                    title: 'Hoddies',
-                    image: 'assets/images/Ellipse 1.png',
-                  ),
-                  SizedBox(width: 10.5),
-                  CategorieItem(
-                    title: 'Shorts',
-                    image: 'assets/images/Ellipse 2.png',
-                  ),
-                  SizedBox(width: 10.5),
-                  CategorieItem(
-                    title: 'Shoes',
-                    image: 'assets/images/Ellipse 3-1.png',
-                  ),
-                  SizedBox(width: 10.5),
-                  CategorieItem(
-                    title: 'Bag',
-                    image: 'assets/images/Ellipse 3.png',
-                  ),
-                  SizedBox(width: 10.5),
-                  CategorieItem(
-                    title: 'Accesories',
-                    image: 'assets/images/Ellipse 4.png',
-                  ),
-                ],
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    CategorieItem(
+                      title: 'Hoddies',
+                      image: 'assets/images/Ellipse 1.png',
+                    ),
+                    SizedBox(width: 16),
+                    CategorieItem(
+                      title: 'Shorts',
+                      image: 'assets/images/Ellipse 2.png',
+                    ),
+                    SizedBox(width: 16),
+                    CategorieItem(
+                      title: 'Shoes',
+                      image: 'assets/images/Ellipse 3-1.png',
+                    ),
+                    SizedBox(width: 16),
+                    CategorieItem(
+                      title: 'Bag',
+                      image: 'assets/images/Ellipse 3.png',
+                    ),
+                    SizedBox(width: 16),
+                    CategorieItem(
+                      title: 'Accesories',
+                      image: 'assets/images/Ellipse 4.png',
+                    ),
+                  ],
+                ),
               ),
               SizedBox(height: 16),
               Row(
@@ -181,11 +214,10 @@ class HomePage extends StatelessWidget {
                       title: "Men's Coaches Jacket",
                       price: "\$66.97",
                     ),
-                    SizedBox(width: 12),
                   ],
                 ),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 25),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -221,7 +253,6 @@ class HomePage extends StatelessWidget {
                       title: "Men's Coaches Jacket",
                       price: "\$66.97",
                     ),
-                
                   ],
                 ),
               ),

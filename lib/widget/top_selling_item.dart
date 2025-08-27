@@ -5,25 +5,22 @@ class TopSellingItem extends StatelessWidget {
   final String title;
   final String price;
 
-
   const TopSellingItem({
     super.key,
     required this.imagePath,
     required this.title,
     required this.price,
- 
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 133,
-     
-     margin: EdgeInsets.only(top: 16),
+      width: 157,
+
+      margin: EdgeInsets.only(top: 16),
       decoration: BoxDecoration(
-        color:Color(0xffF4F4F4),
+        color: Color(0xffF4F4F4),
         borderRadius: BorderRadius.circular(12),
-      
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,7 +35,7 @@ class TopSellingItem extends StatelessWidget {
                 ),
                 child: Image.asset(
                   imagePath,
-                  height: 180,
+                  height: 220,
                   width: double.infinity,
                   fit: BoxFit.cover,
                 ),
@@ -46,10 +43,12 @@ class TopSellingItem extends StatelessWidget {
               Positioned(
                 top: 8,
                 right: 8,
-              
-                
-                  child: Image.asset('assets/icons/Vector.png',height: 16,width: 16,)
-            
+
+                child: Image.asset(
+                  'assets/icons/Vector.png',
+                  height: 16,
+                  width: 16,
+                ),
               ),
             ],
           ),
@@ -63,7 +62,7 @@ class TopSellingItem extends StatelessWidget {
                 Text(
                   title,
                   style: const TextStyle(
-                    fontSize: 10,
+                    fontSize: 12,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
@@ -71,8 +70,8 @@ class TopSellingItem extends StatelessWidget {
                 Text(
                   price,
                   style: const TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ],
