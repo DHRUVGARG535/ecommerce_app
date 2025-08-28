@@ -3,6 +3,7 @@ import 'package:ecommerce_app/widget/catergories_item.dart';
 import 'package:ecommerce_app/widget/top_selling_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -67,11 +68,19 @@ class HomePage extends StatelessWidget {
             ),
             title: Center(
               child: Container(
-                decoration: BoxDecoration(color: Colors.grey),
+                height: 40,
+                width: 85,
+
+                decoration: BoxDecoration(
+                 color: Color(0xffF4F4F4),
+                  borderRadius: BorderRadius.circular(100),
+                
+                ),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text("Men", style: TextStyle(fontSize: 18)),
+                    Text("Men", style: GoogleFonts.gabarito(fontSize: 18)),
                     SizedBox(width: 4),
                     SvgPicture.asset("assets/icons/arrowdown2.svg", height: 18),
                   ],
@@ -123,7 +132,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 24),
+              SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -139,17 +148,19 @@ class HomePage extends StatelessWidget {
                       );
                     },
                     child: Text(
+                      
                       'See All',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.black,
-                        fontWeight: FontWeight.normal,
+                        
+                        fontWeight: FontWeight.normal
                       ),
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 8),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
