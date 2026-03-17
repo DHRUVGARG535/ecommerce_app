@@ -19,24 +19,19 @@ class UBrandTitleText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          title,
-
-          maxLines: maxLines,
-          textAlign: textAlign,
-          overflow: TextOverflow.ellipsis,
-          style: brandTextSize == TextSizes.small
-              ? Theme.of(context).textTheme.labelMedium!.apply(color: color)
-              : brandTextSize == TextSizes.medium
-              ? Theme.of(context).textTheme.bodyLarge!.apply(color: color)
-              : brandTextSize == TextSizes.large
-              ? Theme.of(context).textTheme.titleLarge!.apply(color: color)
-              : Theme.of(context).textTheme.bodyMedium!.apply(color: color),
-        ),
-        
-      ],
+    return Text(
+      title,
+    
+      maxLines: maxLines,
+      textAlign: textAlign,
+      overflow: TextOverflow.ellipsis,
+      style: brandTextSize == TextSizes.small
+          ? Theme.of(context).textTheme.labelMedium!.apply(color: color)
+          : brandTextSize == TextSizes.medium
+          ? Theme.of(context).textTheme.bodyLarge!.apply(color: color)
+          : brandTextSize == TextSizes.large
+          ? Theme.of(context).textTheme.titleLarge!.apply(color: color)
+          : Theme.of(context).textTheme.bodyMedium!.apply(color: color),
     );
   }
 }

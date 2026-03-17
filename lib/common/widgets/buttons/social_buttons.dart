@@ -1,19 +1,23 @@
+import 'package:ecommerce_app/features/authentication/controllers/sign_in/singin_controller.dart';
 import 'package:ecommerce_app/utils/constants/colors.dart';
 import 'package:ecommerce_app/utils/constants/images.dart';
 import 'package:ecommerce_app/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
 
 class SocialButtons extends StatelessWidget {
   const SocialButtons({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(SinginController());
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        buildButton(UImages.googleIcon,(){}),
+        buildButton(UImages.googleIcon, () => controller.loginWithGoogle()),
         SizedBox(width: USizes.spaceBtwItems),
-        buildButton(UImages.facebookIcon,(){}),
+        buildButton(UImages.facebookIcon, () {}),
       ],
     );
   }

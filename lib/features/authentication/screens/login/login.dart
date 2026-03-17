@@ -1,17 +1,20 @@
 import 'package:ecommerce_app/common/widgets/login%20and%20signup/form_divider.dart';
 import 'package:ecommerce_app/common/style/padding.dart';
 import 'package:ecommerce_app/common/widgets/buttons/social_buttons.dart';
+import 'package:ecommerce_app/features/authentication/controllers/sign_in/singin_controller.dart';
 import 'package:ecommerce_app/features/authentication/screens/login/widgets/form_fields.dart';
 import 'package:ecommerce_app/features/authentication/screens/login/widgets/login_header.dart';
 import 'package:ecommerce_app/utils/constants/sizes.dart';
 import 'package:ecommerce_app/utils/constants/texts.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
 
   @override
   Widget build(BuildContext context) {
+ Get.put(SinginController());
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(

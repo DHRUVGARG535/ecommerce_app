@@ -15,7 +15,7 @@ class UTabBar extends StatelessWidget implements PreferredSizeWidget {
       color: dark ? UColors.dark : UColors.white,
 
       child: TabBar(
-        labelPadding: EdgeInsets.all(12),
+        
         labelColor: UColors.primary,
         unselectedLabelColor: UColors.darkGrey,
         indicatorColor: UColors.primary,

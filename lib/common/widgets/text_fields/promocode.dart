@@ -1,15 +1,16 @@
-
 import 'package:ecommerce_app/common/widgets/shapes/rounded_container.dart';
+import 'package:ecommerce_app/features/shop/controllers/promocode/promocode_controller.dart';
 import 'package:ecommerce_app/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/state_manager.dart';
 
 class Promocode extends StatelessWidget {
-  const Promocode({
-    super.key,
-  });
+  const Promocode({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(PromocodeController());
     return URoundedContainer(
       backgroundColor: Colors.transparent,
       padding: EdgeInsets.all(USizes.sm),
@@ -18,10 +19,12 @@ class Promocode extends StatelessWidget {
         children: [
           Expanded(
             child: TextFormField(
-        
+              onChanged: (value) {
+                controller.promocode.value = value;
+              },
               decoration: InputDecoration(
                 border: InputBorder.none,
-    
+
                 errorBorder: InputBorder.none,
                 enabledBorder: InputBorder.none,
                 focusedBorder: InputBorder.none,
@@ -30,14 +33,16 @@ class Promocode extends StatelessWidget {
               ),
             ),
           ),
-    
+
           SizedBox(
             width: 80,
-            
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(side: BorderSide.none),
-              onPressed: (null),
-              child: Text('Apply'),
+
+            child: Obx(
+              ()=>ElevatedButton(
+                style: ElevatedButton.styleFrom(side: BorderSide.none),
+                onPressed: controller.promocode.value.isEmpty?null:controller.applyPromocode,
+                child: Text('Apply'),
+              ),
             ),
           ),
         ],

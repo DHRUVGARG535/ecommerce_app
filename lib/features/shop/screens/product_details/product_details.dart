@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/common/widgets/buttons/uelevated_button.dart';
 import 'package:ecommerce_app/common/widgets/texts/section_heading.dart';
+import 'package:ecommerce_app/features/shop/models/product_model.dart';
 import 'package:ecommerce_app/features/shop/screens/product_details/widgets/bottom_addto_cart.dart';
 import 'package:ecommerce_app/features/shop/screens/product_details/widgets/prdouct_thumnail_slider.dart';
 import 'package:ecommerce_app/features/shop/screens/product_details/widgets/product_attributes.dart';
@@ -9,7 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
-  const ProductDetailsScreen({super.key});
+  const ProductDetailsScreen({super.key, required this.product});
+
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +20,14 @@ class ProductDetailsScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            UProductThumbnailAndSlider(),
+            UProductThumbnailAndSlider(product: product),
 
-            ProductMetaData(),
+            ProductMetaData(product: product),
 
-            ProductAttributes(),
+            if (product.productAttributes != null && product.productAttributes!.isNotEmpty) ProductAttributes(
+
+              product: product,
+            ),
 
             SizedBox(height: USizes.spaceBtwItems),
             Padding(
@@ -48,7 +54,7 @@ class ProductDetailsScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
 
-                    'hi my name is dhruv garg and i am wearing these shoes hi my name is dhruv garg and i am wearing these shoes hi my name is dhruv garg and i am wearing these shoes ',
+                    product.description ?? '',
                   ),
                 ],
               ),
@@ -58,7 +64,7 @@ class ProductDetailsScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomAddToCart(),
+      bottomNavigationBar: BottomAddToCart(product: product,),
     );
   }
 }

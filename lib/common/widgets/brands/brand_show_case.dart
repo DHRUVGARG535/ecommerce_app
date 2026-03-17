@@ -1,14 +1,18 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_app/common/widgets/brands/brands_text_card.dart';
 import 'package:ecommerce_app/common/widgets/shapes/rounded_container.dart';
+import 'package:ecommerce_app/common/widgets/shimmer/shimmer_effect.dart';
+import 'package:ecommerce_app/features/shop/models/brand_model.dart';
 import 'package:ecommerce_app/utils/constants/colors.dart';
 import 'package:ecommerce_app/utils/constants/sizes.dart';
 import 'package:ecommerce_app/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 
 class BrandShowCase extends StatelessWidget {
-  const BrandShowCase({super.key, required this.images});
+  const BrandShowCase({super.key, required this.images, required this.brand});
 
   final List<String> images;
+  final BrandModel brand;
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +25,14 @@ class BrandShowCase extends StatelessWidget {
         bottom: USizes.md / 2,
       ),
       child: URoundedContainer(
-        backgroundColor: dark?UColors.dark:UColors.light,
+        backgroundColor: dark ? UColors.dark : UColors.light,
         showBorder: true,
         padding: EdgeInsets.all(USizes.md),
 
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            UBrandsCard(showBorder: false),
+            UBrandsCard(showBorder: false, brand: brand),
             Row(
               children: images
                   .map((image) => buildBrandImage(context, image))
@@ -49,7 +53,13 @@ class BrandShowCase extends StatelessWidget {
             : UColors.light,
         padding: EdgeInsets.all(USizes.sm),
         margin: EdgeInsets.only(right: USizes.sm),
-        child: Image(image: AssetImage(image), fit: BoxFit.contain),
+        child: CachedNetworkImage(
+          fit: BoxFit.contain,
+          imageUrl: image,
+          progressIndicatorBuilder: (context, url, progress) =>
+              UShimmerEffect(width: 100, height: 100),
+          errorWidget: (context, url, error) => Icon(Icons.error),
+        ),
       ),
     );
   }

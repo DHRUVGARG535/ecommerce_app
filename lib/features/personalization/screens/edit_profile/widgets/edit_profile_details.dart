@@ -8,11 +8,13 @@ class EditProfileDetailsRow extends StatelessWidget {
     required this.title,
     required this.subTitle,
     this.icon = Iconsax.arrow_right_34,
+     this.func,
   });
 
   final String title;
   final String subTitle;
   final IconData icon;
+  final VoidCallback? func;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,13 @@ class EditProfileDetailsRow extends StatelessWidget {
           flex: 4,
           child: Text(subTitle, style: Theme.of(context).textTheme.bodyMedium),
         ),
-        Expanded(child: Icon(icon, size: USizes.iconSm)),
+        Expanded(
+          child: IconButton(
+            
+            onPressed: func,
+            icon: Icon(icon, size: USizes.iconSm),
+          ),
+        ),
       ],
     );
   }

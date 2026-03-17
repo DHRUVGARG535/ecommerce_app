@@ -1,10 +1,12 @@
 import 'package:ecommerce_app/common/widgets/appbar/custom_appbar.dart';
+import 'package:ecommerce_app/features/personalization/controllers/address_controller.dart';
 import 'package:ecommerce_app/features/personalization/screens/address/edit_address.dart';
 import 'package:ecommerce_app/features/personalization/screens/address/widgets/single_address.dart';
 import 'package:ecommerce_app/utils/constants/colors.dart';
 import 'package:ecommerce_app/utils/constants/sizes.dart';
+import 'package:ecommerce_app/utils/helpers/cloud_helper_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class AddressScreen extends StatelessWidget {
@@ -12,11 +14,12 @@ class AddressScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(AddressController());
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.to(EditAddressScreen()),
         backgroundColor: UColors.primary,
-        child: Icon(Iconsax.add,color: UColors.white,),
+        child: Icon(Iconsax.add, color: UColors.white),
       ),
       appBar: UAppBar(
         leadingIcon: Icons.arrow_back,
@@ -27,14 +30,28 @@ class AddressScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(USizes.defaultSpace),
-        child: Column(
-          children: [
-            SingleAddressTile(isSelected: true),
-            SizedBox(height: USizes.spaceBtwItems),
-            SingleAddressTile(isSelected: false),
-            SizedBox(height: USizes.spaceBtwItems),
-            SingleAddressTile(isSelected: false),
-          ],
+        child: Obx(
+          ()=> FutureBuilder(
+            key: Key(controller.refreshData.value.toString()),
+            future: controller.fetchAddress(),
+            builder: (context, asyncSnapshot) {
+              final widget = UCloudHelperFunctions.checkMultiRecordState(
+                snapshot: asyncSnapshot,
+              );
+              if (widget != null) return widget;
+              final addresses = asyncSnapshot.data!;
+              return ListView.separated(
+                separatorBuilder: (context, index) =>
+                    SizedBox(height: USizes.spaceBtwItems),
+                itemCount: addresses.length,
+                itemBuilder: (context, index) => SingleAddressTile(
+                  onTap: () =>
+                      controller.updateAddress(address: addresses[index]),
+                  address: addresses[index],
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

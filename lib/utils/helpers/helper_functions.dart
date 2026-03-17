@@ -1,4 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 
 class UHelperFunctions {
   UHelperFunctions._();
@@ -45,5 +50,44 @@ class UHelperFunctions {
 
   static bool isDarkMode(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark;
+  }
+
+  static String getGreetingMessage() {
+    final hour = DateTime.now().hour;
+
+    if (hour >= 5 && hour < 12) {
+      // 5AM to 12PM
+      return 'Good Morning';
+    } else if (hour >= 12 && hour < 16) {
+      // 12PM to 4PM
+      return 'Good Afternoon';
+    } else if (hour >= 16 && hour < 19) {
+      // 5PM to 7PM
+      return 'Good Evening';
+    } else {
+      return 'Good Night';
+    }
+  }
+
+  static Future<File> assetToFile(String assetPath) async {
+    // Load asset bytes
+    final byteData = await rootBundle.load(assetPath);
+
+    // Get temp directory
+    final tempDir = await getTemporaryDirectory();
+    final file = File('${tempDir.path}/${assetPath.split('/').last}');
+
+    // Write bytes to temp file
+    await file.writeAsBytes(byteData.buffer.asUint8List());
+
+    return file;
+  }
+
+  /// Function to convert asset to file
+  static String getFormattedDate(
+    DateTime date, {
+    String format = 'dd MMM yyyy',
+  }) {
+    return DateFormat(format).format(date);
   }
 }

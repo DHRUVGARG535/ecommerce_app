@@ -1,14 +1,17 @@
+import 'package:ecommerce_app/features/shop/controllers/cart/cart_controller.dart';
 import 'package:ecommerce_app/features/shop/screens/cart/cart_screen.dart';
 import 'package:ecommerce_app/utils/constants/colors.dart';
 import 'package:ecommerce_app/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/state_manager.dart';
 import 'package:iconsax/iconsax.dart';
 
 class UCartCounter extends StatelessWidget {
-  const UCartCounter({super.key});
+   UCartCounter({super.key});
 
+  final controller = Get.put(CartController());
   @override
   Widget build(BuildContext context) {
     final bool dark = UHelperFunctions.isDarkMode(context);
@@ -16,7 +19,7 @@ class UCartCounter extends StatelessWidget {
       children: [
         IconButton(
           onPressed: () => Get.to(CartScreen()),
-          icon: Icon(Iconsax.shopping_bag, color: UColors.light),
+          icon: Icon(Iconsax.shopping_bag, color: dark ? UColors.dark : UColors.light),
         ),
         Positioned(
           top: 3,
@@ -28,12 +31,14 @@ class UCartCounter extends StatelessWidget {
             ),
             height: 18,
             width: 18,
-            child: Center(
-              child: Text(
-                "2",
-                style: Theme.of(context).textTheme.labelLarge!.apply(
-                  fontSizeFactor: 0.8,
-                  color: dark ? UColors.light : UColors.dark,
+            child: Obx(
+              () => Center(
+                child: Text(
+                  controller.noOfCartItems.value.toString(),
+                  style: Theme.of(context).textTheme.labelLarge!.apply(
+                    fontSizeFactor: 0.8,
+                    color: dark ? UColors.light : UColors.dark,
+                  ),
                 ),
               ),
             ),

@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/common/style/padding.dart';
 import 'package:ecommerce_app/common/widgets/buttons/uelevated_button.dart';
+import 'package:ecommerce_app/features/authentication/controllers/reset_password/reset_password_controller.dart';
 import 'package:ecommerce_app/features/authentication/screens/login/login.dart';
 import 'package:ecommerce_app/utils/constants/images.dart';
 import 'package:ecommerce_app/utils/constants/sizes.dart';
@@ -11,10 +12,13 @@ import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
-  const ResetPasswordScreen({super.key});
+  const ResetPasswordScreen({super.key, required this.email});
+
+  final String email;
 
   @override
   Widget build(BuildContext context) {
+    final controller = ResetPasswordController.instance;
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -41,10 +45,7 @@ class ResetPasswordScreen extends StatelessWidget {
             ),
 
             SizedBox(height: USizes.spaceBtwItems),
-            Text(
-              'gargd53573@gmail.com',
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
+            Text(email, style: Theme.of(context).textTheme.bodyMedium),
             SizedBox(height: USizes.spaceBtwItems),
             Text(
               UTexts.resetPasswordSubTitle,
@@ -53,12 +54,18 @@ class ResetPasswordScreen extends StatelessWidget {
             ),
 
             SizedBox(height: USizes.spaceBtwSections),
-            UElevatedButton(child: Text(UTexts.done), func: ()=>Get.to(Login())),
+            UElevatedButton(
+              child: Text(UTexts.done),
+              func: () => Get.offAll(Login()),
+            ),
             SizedBox(height: USizes.spaceBtwItems),
             SizedBox(
               child: TextButton(
-                onPressed: () {},
-                child: Text(UTexts.resendEmail,style: Theme.of(context).textTheme.labelSmall,),
+                onPressed: controller.resendPasswordResetEmail,
+                child: Text(
+                  UTexts.resendEmail,
+                  style: Theme.of(context).textTheme.labelSmall,
+                ),
               ),
             ),
           ],

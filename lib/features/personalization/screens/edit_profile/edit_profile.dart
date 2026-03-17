@@ -3,9 +3,12 @@ import 'package:ecommerce_app/common/widgets/appbar/custom_appbar.dart';
 import 'package:ecommerce_app/common/widgets/icon/circular_icon.dart';
 import 'package:ecommerce_app/common/widgets/images/user_profile_logo.dart';
 import 'package:ecommerce_app/common/widgets/texts/section_heading.dart';
+import 'package:ecommerce_app/features/personalization/controllers/user_controller.dart';
+import 'package:ecommerce_app/features/personalization/screens/change_name/change_name.dart';
 import 'package:ecommerce_app/features/personalization/screens/edit_profile/widgets/edit_profile_details.dart';
 import 'package:ecommerce_app/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class EditProfileScreen extends StatelessWidget {
@@ -13,6 +16,7 @@ class EditProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = UserController.instance;
     return Scaffold(
       appBar: UAppBar(
         title: Text(
@@ -29,19 +33,28 @@ class EditProfileScreen extends StatelessWidget {
               Stack(
                 children: [
                   Center(child: UserProfileLogo()),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    bottom: 0,
-                    child: Center(child: UCircularIcon(icon: Iconsax.edit)),
-                  ),
+                  Obx(() {
+                    return controller.isProfileUploading.value
+                        ? SizedBox()
+                        : Positioned(
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            bottom: 0,
+                            child: Center(
+                              child: UCircularIcon(
+                                icon: Iconsax.edit,
+                                onPressed: controller.updateUserProiflePicture,
+                              ),
+                            ),
+                          );
+                  }),
                 ],
               ),
               SizedBox(height: USizes.spaceBtwItems),
               Divider(),
 
-              SizedBox(height: USizes.spaceBtwItems*1.5),
+              SizedBox(height: USizes.spaceBtwItems * 1.5),
               USectionHeading(
                 title: 'Account Settings',
                 showViewAll: false,
@@ -49,15 +62,19 @@ class EditProfileScreen extends StatelessWidget {
               ),
               SizedBox(height: USizes.spaceBtwItems),
 
-              EditProfileDetailsRow(title: 'Name', subTitle: 'Dhruv Garg'),
-              SizedBox(height: USizes.spaceBtwItems),
+              EditProfileDetailsRow(
+                title: 'Name',
+                subTitle: controller.user.value.fullName,
+                func: () => Get.to(ChangeName()),
+              ),
+
               EditProfileDetailsRow(
                 title: 'Username',
-                subTitle: 'dhruvgarg535',
+                subTitle: controller.user.value.username,
               ),
               SizedBox(height: USizes.spaceBtwItems),
               Divider(),
-              SizedBox(height: USizes.spaceBtwItems*1.5),
+              SizedBox(height: USizes.spaceBtwItems * 1.5),
 
               USectionHeading(
                 title: 'Profile Settings',
@@ -68,25 +85,25 @@ class EditProfileScreen extends StatelessWidget {
 
               EditProfileDetailsRow(
                 title: 'User ID',
-                subTitle: '232345',
+                subTitle: controller.user.value.id,
                 icon: Iconsax.copy,
               ),
               SizedBox(height: USizes.spaceBtwItems),
               EditProfileDetailsRow(
                 title: 'Email',
-                subTitle: 'garg53573@gmail.com',
+                subTitle: controller.user.value.email,
               ),
               SizedBox(height: USizes.spaceBtwItems),
               EditProfileDetailsRow(
                 title: 'Phone Number',
-                subTitle: '8218068160',
+                subTitle: controller.user.value.phoneNumber,
               ),
               SizedBox(height: USizes.spaceBtwItems),
               EditProfileDetailsRow(title: 'Gender', subTitle: 'Male'),
               SizedBox(height: USizes.spaceBtwItems),
               Divider(),
               TextButton(
-                onPressed: () {},
+                onPressed: controller.deletaAccountWarning,
                 child: Text(
                   'Close Account',
                   style: TextStyle(color: Colors.red),

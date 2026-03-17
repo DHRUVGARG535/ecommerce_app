@@ -1,11 +1,15 @@
 import 'package:ecommerce_app/common/widgets/texts/section_heading.dart';
+import 'package:ecommerce_app/data/repositories/authentication_respository.dart';
+import 'package:ecommerce_app/features/personalization/controllers/user_controller.dart';
 import 'package:ecommerce_app/features/personalization/screens/address/address.dart';
 import 'package:ecommerce_app/features/personalization/screens/profile/widgets/profile_primary_header.dart';
 import 'package:ecommerce_app/features/personalization/screens/profile/widgets/settings_menu_tile.dart';
 import 'package:ecommerce_app/features/personalization/screens/profile/widgets/user_profile_tile.dart';
+import 'package:ecommerce_app/features/shop/screens/cart/cart_screen.dart';
 import 'package:ecommerce_app/features/shop/screens/order/order.dart';
 import 'package:ecommerce_app/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/route_manager.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -14,6 +18,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = UserController.instance;
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -25,9 +30,11 @@ class ProfileScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  UserProfileTile(
-                    title: 'Dhruv',
-                    subTitle: 'dhruvgarg0903@gmai.com',
+                  Obx(
+                    () => UserProfileTile(
+                      title: controller.user.value.fullName,
+                      subTitle: controller.user.value.email,
+                    ),
                   ),
                   SizedBox(height: USizes.spaceBtwItems),
                   Column(
@@ -53,14 +60,14 @@ class ProfileScreen extends StatelessWidget {
                         title: 'My Cart',
                         subTitle: 'Add, remove products and move to checkout',
                         icon: Iconsax.shopping_cart,
-                        func: () {},
+                        func: () =>Get.to(CartScreen()),
                       ),
 
                       SizedBox(height: USizes.spaceBtwSections),
                       SizedBox(
                         width: double.infinity,
                         child: OutlinedButton(
-                          onPressed: () {},
+                          onPressed: AuthenticationRepository.instance.logout,
                           child: Text('Log Out'),
                         ),
                       ),

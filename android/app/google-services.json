@@ -7,17 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:560246898308:android:1f5f2718a91f88d86d0cd1",
+        "mobilesdk_app_id": "1:560246898308:android:db294ec2c527d6fb6d0cd1",
         "android_client_info": {
-          "package_name": "com.example.ecommerce_app"
+          "package_name": "com.dhruv.ecommerceapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "560246898308-gsh7j0pfj0q3iop2i95vf4ehatuu8dh2.apps.googleusercontent.com",
+          "client_id": "560246898308-ulnf2976sot3t5fohrsncfr6dpl7q314.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.ecommerce_app",
+            "package_name": "com.dhruv.ecommerceapp",
             "certificate_hash": "9b418eb04e1d981ef6d45eb1d11f8d53c935bb46"
           }
         },
@@ -39,10 +39,10 @@
               "client_type": 3
             },
             {
-              "client_id": "560246898308-7jc3nv4fb51dl7e05gaifmpabun83a0a.apps.googleusercontent.com",
+              "client_id": "560246898308-5lsdpd42u8mkm8lf1fs3k5fqr0p31d8n.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.ecommerceApp"
+                "bundle_id": "com.dhruv.ecommerceapp"
               }
             }
           ]
