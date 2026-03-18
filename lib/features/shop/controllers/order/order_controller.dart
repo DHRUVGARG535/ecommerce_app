@@ -31,6 +31,12 @@ class OrderController extends GetxController {
         return;
       }
 
+      if (AddressController.instance.selectedAddress.value.id.isEmpty) {
+        UFullScreenLoader.stopLoading();
+        USnackBarHelpers.warningSnackBar(title: 'Address not selected');
+        return;
+      }
+
       OrderModel order = OrderModel(
         id: UniqueKey().toString(),
         status: OrderStatus.pending,
@@ -55,24 +61,21 @@ class OrderController extends GetxController {
         ),
       );
     } catch (e) {
-      USnackBarHelpers.errorSnackBar(title: 'Error',message: e.toString());
+      USnackBarHelpers.errorSnackBar(title: 'Error', message: e.toString());
     }
   }
 
-
   Future<List<OrderModel>> getAllOrders() async {
-
-    try{
+    try {
       final List<OrderModel> orderList = await _repository.getAllOrder();
 
       return orderList;
-
-
-    }catch(e) {
-      USnackBarHelpers.errorSnackBar(title: 'Error Occured',message: e.toString());
+    } catch (e) {
+      USnackBarHelpers.errorSnackBar(
+        title: 'Error Occured',
+        message: e.toString(),
+      );
       return [];
     }
-
   }
-
 }

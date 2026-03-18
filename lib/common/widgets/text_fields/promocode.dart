@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/common/widgets/shapes/rounded_container.dart';
 import 'package:ecommerce_app/features/shop/controllers/promocode/promocode_controller.dart';
+import 'package:ecommerce_app/utils/constants/colors.dart';
 import 'package:ecommerce_app/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,7 @@ class Promocode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(PromocodeController());
+    final controller = PromocodeController.instance;
     return URoundedContainer(
       backgroundColor: Colors.transparent,
       padding: EdgeInsets.all(USizes.sm),
@@ -38,10 +39,20 @@ class Promocode extends StatelessWidget {
             width: 80,
 
             child: Obx(
-              ()=>ElevatedButton(
+              () => ElevatedButton(
                 style: ElevatedButton.styleFrom(side: BorderSide.none),
-                onPressed: controller.promocode.value.isEmpty?null:controller.applyPromocode,
-                child: Text('Apply'),
+                onPressed: controller.appliedPromocode.value.id.isNotEmpty
+                    ? null
+                    : controller.promocode.value.isEmpty
+                    ? null
+                    : controller.applyPromocode,
+                child: controller.isLoading.value
+                    ? CircularProgressIndicator(color: UColors.white)
+                    : Text(
+                        controller.appliedPromocode.value.id.isNotEmpty
+                            ? 'Applied'
+                            : 'Apply',
+                      ),
               ),
             ),
           ),

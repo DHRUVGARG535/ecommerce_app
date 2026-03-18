@@ -35,7 +35,6 @@ class BrandsRepository extends GetxController {
             .doc(brand.id)
             .set(brand.toJson());
 
-        print('Brand uploaded ${brand.name}');
       }
     } on FirebaseException catch (e) {
       throw UFirebaseException(e.code).message;
@@ -44,7 +43,6 @@ class BrandsRepository extends GetxController {
     } on PlatformException catch (e) {
       throw UPlatformException(e.code).message;
     } catch (e) {
-      print(e);
       throw 'Something went wrong. Please try again';
     }
   }

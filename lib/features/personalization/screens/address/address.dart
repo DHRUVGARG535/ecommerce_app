@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/common/widgets/appbar/custom_appbar.dart';
+import 'package:ecommerce_app/common/widgets/shimmer/addresses_shimmer.dart';
 import 'package:ecommerce_app/features/personalization/controllers/address_controller.dart';
 import 'package:ecommerce_app/features/personalization/screens/address/edit_address.dart';
 import 'package:ecommerce_app/features/personalization/screens/address/widgets/single_address.dart';
@@ -35,12 +36,15 @@ class AddressScreen extends StatelessWidget {
             key: Key(controller.refreshData.value.toString()),
             future: controller.fetchAddress(),
             builder: (context, asyncSnapshot) {
+              final loader = UAddressesShimmer();
               final widget = UCloudHelperFunctions.checkMultiRecordState(
                 snapshot: asyncSnapshot,
+                loader: loader
               );
               if (widget != null) return widget;
               final addresses = asyncSnapshot.data!;
               return ListView.separated(
+                physics: NeverScrollableScrollPhysics(),
                 separatorBuilder: (context, index) =>
                     SizedBox(height: USizes.spaceBtwItems),
                 itemCount: addresses.length,

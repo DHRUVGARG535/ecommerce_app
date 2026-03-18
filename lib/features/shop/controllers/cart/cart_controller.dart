@@ -3,6 +3,7 @@ import 'package:ecommerce_app/features/shop/controllers/product/variaton_control
 import 'package:ecommerce_app/features/shop/models/cart_item_model.dart';
 import 'package:ecommerce_app/features/shop/models/product_model.dart';
 import 'package:ecommerce_app/features/shop/models/product_variation_model.dart';
+import 'package:ecommerce_app/features/shop/screens/checkout/checkout.dart';
 import 'package:ecommerce_app/utils/constants/enums.dart';
 import 'package:ecommerce_app/utils/constants/key.dart';
 import 'package:ecommerce_app/utils/popups/snackbar_helpers.dart';
@@ -23,11 +24,12 @@ class CartController extends GetxController {
 
   final variationController = VariatonController.instance;
 
- @override
-void onInit() {
-  loadCartItems();
-  super.onInit();
-}
+  @override
+  void onInit() {
+    loadCartItems();
+    super.onInit();
+  }
+
   void loadCartItems() {
     List<dynamic>? cartItemsString = _storage.read(UKeys.cartItemsKey);
 
@@ -160,8 +162,7 @@ void onInit() {
       if (cartItems[index].quantity > 1) {
         cartItems[index].quantity -= 1;
       } else {
-       removeFromCartDialog(index);
-           
+        removeFromCartDialog(index);
       }
     }
 
@@ -182,7 +183,6 @@ void onInit() {
       },
       onCancel: () {},
     );
-    
   }
 
   int getProductQuantityInCart(String productId) {
@@ -229,6 +229,43 @@ void onInit() {
       selectedVariation: isVariaton ? variation.attributeValues : null,
       variationId: variation.id,
     );
+  }
+
+  Future<void> directCheckout(ProductModel proudct) async {
+    cartItems.clear();
+
+    productQuantityInCart.value = 1;
+    if (proudct.productType == ProductType.variable.toString() &&
+        variationController.selectedVariation.value.id.isEmpty) {
+      USnackBarHelpers.customToast(message: 'Please select a variaton');
+    }
+
+    if (proudct.productType == ProductType.variable.toString()) {
+      if (variationController.selectedVariation.value.stock < 1) {
+        USnackBarHelpers.warningSnackBar(
+          title: 'Out of Stock',
+          message: 'This variation is out of stock',
+        );
+      }
+    } else {
+      if (proudct.stock < 1) {
+        USnackBarHelpers.warningSnackBar(
+          title: 'Out of Stock',
+          message: 'This product is out of stock',
+        );
+      }
+    }
+
+    CartItemModel selectedCartItem = convertToCartItem(proudct  , productQuantityInCart.value);
+    cartItems.add(selectedCartItem);
+
+    updateCartTotals();
+
+    await Get.to(CheckoutScreen());
+
+    loadCartItems();
+
+
   }
 
   void clearCart() {

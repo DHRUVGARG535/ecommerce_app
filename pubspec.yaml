@@ -38,9 +38,10 @@ dependencies:
   cached_network_image: ^3.4.1
   path_provider: ^2.1.5
   intl: ^0.20.2
-  flutter_branch_sdk: ^9.1.1
-  flutter_stripe: ^12.4.0
+  # flutter_branch_sdk: ^9.1.1
+  # flutter_stripe: ^12.4.0
   dio: ^5.9.2
+  flutter_launcher_icons: ^0.14.4
 
 
 #----------------------
@@ -64,11 +65,6 @@ flutter:
     - assets/animations/
     - assets/logo/
     - assets/images/
-    - assets/icons/
-    - assets/products/
-    - assets/banners/
-    - assets/brands/
-    - assets/icons/categories/
     - assets/icons/payment_methods/
   
 

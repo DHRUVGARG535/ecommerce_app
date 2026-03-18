@@ -20,8 +20,6 @@ class SinginController extends GetxController {
     super.onInit();
   }
 
-  final userController = Get.put(UserController());
-
   final singInFormKey = GlobalKey<FormState>();
 
   final email = TextEditingController();
@@ -76,17 +74,23 @@ class SinginController extends GetxController {
       if (!isConnected) {
         USnackBarHelpers.warningSnackBar(title: 'Please connect to Internet');
         UFullScreenLoader.stopLoading();
-        return;
+        return; 
       }
 
       UserCredential credential = await AuthenticationRepository.instance
           .signInWithGoogle();
 
-      await userController.saveUserRecord(credential);
+      await Get.put(UserController()).saveUserRecord(credential);
 
       UFullScreenLoader.stopLoading();
       AuthenticationRepository.instance.screenRedirect();
       USnackBarHelpers.successSnackBar(title: 'Successful Login');
-    } catch (e) {}
+    } catch (e) {
+      UFullScreenLoader.stopLoading();
+      USnackBarHelpers.errorSnackBar(
+        title: 'Login Failed',
+        message: e.toString(),
+      );
+    }
   }
 }

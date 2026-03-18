@@ -36,7 +36,6 @@ class CategoryRepository extends GetxController {
             .doc(category.id)
             .set(category.toJson());
 
-        print('Category uploaded ${category.name}');
       }
     } on FirebaseException catch (e) {
       throw UFirebaseException(e.code).message;
@@ -81,7 +80,6 @@ class CategoryRepository extends GetxController {
             .doc()
             .set(brandCategory.toJson());
 
-        print('Category uploaded ${brandCategory.brandId}');
       }
     } on FirebaseException catch (e) {
       throw UFirebaseException(e.code).message;
@@ -104,7 +102,6 @@ class CategoryRepository extends GetxController {
             .doc()
             .set(productCategory.toJson());
 
-        print('Category uploaded ${productCategory.productId}');
       }
     } on FirebaseException catch (e) {
       throw UFirebaseException(e.code).message;

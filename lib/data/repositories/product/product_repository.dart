@@ -74,7 +74,6 @@ class ProductRepository extends GetxController {
             .doc(product.id)
             .set(product.toJson());
 
-        print('Product Uploade: ${product.title}');
       }
     } on FirebaseException catch (e) {
       throw UFirebaseException(e.code).message;
@@ -84,7 +83,7 @@ class ProductRepository extends GetxController {
       throw UPlatformException(e.code).message;
     } catch (e) {
       throw 'Something went wrong. Please try again';
-    }
+    } 
   }
 
   Future<List<ProductModel>> getFeaturedProducts() async {
@@ -92,7 +91,7 @@ class ProductRepository extends GetxController {
       final query = await _db
           .collection(UKeys.productsCollection)
           .where('isFeatured', isEqualTo: true)
-          .limit(4)
+          
           .get();
 
       if (query.docs.isNotEmpty) {

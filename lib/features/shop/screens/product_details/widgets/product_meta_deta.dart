@@ -28,6 +28,7 @@ class ProductMetaData extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: USizes.sm,),
           Row(
             children: [
               if (discount != null) ...[
@@ -62,8 +63,7 @@ class ProductMetaData extends StatelessWidget {
                 lineThrough: false,
                 isLarge: true,
               ),
-              Spacer(),
-              IconButton(onPressed: () {}, icon: Icon(Icons.share)),
+             
             ],
           ),
           SizedBox(height: USizes.sm),

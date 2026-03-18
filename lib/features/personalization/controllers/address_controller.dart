@@ -1,7 +1,9 @@
+import 'package:ecommerce_app/common/widgets/buttons/uelevated_button.dart';
 import 'package:ecommerce_app/common/widgets/loaders/circular_loader.dart';
 import 'package:ecommerce_app/common/widgets/texts/section_heading.dart';
 import 'package:ecommerce_app/data/repositories/address/address_repository.dart';
 import 'package:ecommerce_app/features/personalization/models/address_model.dart';
+import 'package:ecommerce_app/features/personalization/screens/address/edit_address.dart';
 import 'package:ecommerce_app/features/personalization/screens/address/widgets/single_address.dart';
 import 'package:ecommerce_app/utils/constants/sizes.dart';
 import 'package:ecommerce_app/utils/helpers/cloud_helper_functions.dart';
@@ -82,41 +84,57 @@ class AddressController extends GetxController {
   Future<void> selectedNewAddress(BuildContext context) {
     return showModalBottomSheet(
       context: context,
-      builder: (context) => SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(USizes.lg),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              USectionHeading(title: 'Select Address', showViewAll: false),
-              SizedBox(height: USizes.spaceBtwItems),
-              FutureBuilder(
-                future: fetchAddress(),
-                builder: (context, snapshot) {
-                  final widget = UCloudHelperFunctions.checkMultiRecordState(
-                    snapshot: snapshot,
-                  );
-                  if (widget != null) return widget;
+      builder: (context) => Stack(
+        children: [
+          SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.all(USizes.lg),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  USectionHeading(title: 'Select Address', showViewAll: false),
+                  SizedBox(height: USizes.spaceBtwItems),
+                  FutureBuilder(
+                    future: fetchAddress(),
+                    builder: (context, snapshot) {
+                      final widget = UCloudHelperFunctions.checkMultiRecordState(
+                        snapshot: snapshot,
+                      );
+                      if (widget != null) return widget;
+          
+                      return ListView.separated(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) => SingleAddressTile(
+                          address: snapshot.data![index],
+                          onTap: () {
+                            updateAddress(address: snapshot.data![index]);
+                            Get.back();
+                          },
+                        ),
+                        separatorBuilder: (context, index) =>
+                            SizedBox(height: USizes.spaceBtwItems),
+                        itemCount: snapshot.data!.length,
+                      );
+                    },
+                  ),
+                  SizedBox(height: USizes.spaceBtwSections),
 
-                  return ListView.separated(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) => SingleAddressTile(
-                      address: snapshot.data![index],
-                      onTap: () {
-                        updateAddress(address: snapshot.data![index]);
-                        Get.back();
-                      },
-                    ),
-                    separatorBuilder: (context, index) =>
-                        SizedBox(height: USizes.spaceBtwItems),
-                    itemCount: snapshot.data!.length,
-                  );
-                },
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+     
+     Positioned(
+      bottom: USizes.defaultSpace,
+      left: USizes.defaultSpace*2,
+      right: USizes.defaultSpace*2  ,
+      
+      child: 
+     UElevatedButton(child: Text('Add new Address'), func: () => Get.to(EditAddressScreen()),))
+     
+     
+        ],
       ),
     );
   }

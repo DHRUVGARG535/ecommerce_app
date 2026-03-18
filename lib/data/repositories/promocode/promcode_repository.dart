@@ -56,4 +56,24 @@ class PromocodeRepository extends GetxController {
       throw 'Something went wrong. Please try again';
     }
   }
+
+  Future<void> updateSingleField(
+    PromoCodeModel promocode,
+    String key,
+    dynamic value,
+  ) async {
+    try {
+      await _db.collection(UKeys.promoCodesCollection).doc(promocode.id).update(
+        {key: value},
+      );
+    } on FirebaseException catch (e) {
+      throw UFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw UFormatException();
+    } on PlatformException catch (e) {
+      throw UPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 }

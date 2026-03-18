@@ -12,11 +12,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.system,
       getPages: UAppRoutes.screens,
       theme: UAppTheme.lightTheme,
       darkTheme: UAppTheme.darkTheme,
-initialBinding: UBindings(),
+      initialBinding: UBindings(),
       home: const Scaffold(
         body: Center(child: CircularProgressIndicator(color: UColors.primary)),
       ),

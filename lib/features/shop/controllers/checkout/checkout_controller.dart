@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/common/widgets/texts/section_heading.dart';
-import 'package:ecommerce_app/data/services/stripe_services.dart';
+// import 'package:ecommerce_app/data/services/stripe_services.dart';
 import 'package:ecommerce_app/features/shop/controllers/order/order_controller.dart';
+import 'package:ecommerce_app/features/shop/controllers/promocode/promocode_controller.dart';
 import 'package:ecommerce_app/features/shop/models/payment_method_model.dart';
 import 'package:ecommerce_app/features/shop/screens/checkout/widgets.dart/payment_method_tile.dart';
 import 'package:ecommerce_app/utils/constants/enums.dart';
@@ -15,7 +16,7 @@ class CheckoutController extends GetxController {
 
   Rx<PaymentMethodModel> paymentMethod = PaymentMethodModel.empty().obs;
   final orderController = Get.put(OrderController());
-  final _stripeServie = Get.put(StripeServices());
+  // final _stripeServie = Get.put(StripeServices());  
   RxBool isLoading = false.obs;
 
   @override
@@ -60,14 +61,14 @@ class CheckoutController extends GetxController {
               ),
 
               SizedBox(height: USizes.spaceBtwItems / 2),
-              UPaymentTile(
-                paymentMethod: PaymentMethodModel(
-                  name: 'Credit Card/Debit Card',
-                  image: UImages.creditCard,
-                  paymentMethod: PaymentMethods.creditCard,
-                ),
-              ),
-              SizedBox(height: USizes.spaceBtwItems / 2),
+              // UPaymentTile(
+              //   paymentMethod: PaymentMethodModel(
+              //     name: 'Credit Card/Debit Card',
+              //     image: UImages.creditCard,
+              //     paymentMethod: PaymentMethods.creditCard,
+              //   ),
+              // ),
+              // SizedBox(height: USizes.spaceBtwItems / 2),
             ],
           ),
         ),
@@ -84,9 +85,9 @@ class CheckoutController extends GetxController {
         case PaymentMethods.cashOnDelivery:
           break;
 
-        case PaymentMethods.creditCard:
-          await _stripeServie.initPaymentSheet('usd', amount.toInt());
-          await _stripeServie.showPaymentSheet();
+        // case PaymentMethods.creditCard:
+        //   await _stripeServie.initPaymentSheet('usd', amount.toInt());
+        //   await _stripeServie.showPaymentSheet();
 
         default:
           throw 'Payment method is not supported';
@@ -95,7 +96,12 @@ class CheckoutController extends GetxController {
 
       isLoading.value = false;
 
-      orderController.processOrder(amount);
+      await orderController.processOrder(amount);
+
+      PromocodeController.instance.decreaseNumberOfPromocode();
+      PromocodeController.instance.addUserToPromocode();
+
+
     } catch (e) {
       isLoading.value = false;
       USnackBarHelpers.errorSnackBar(title: 'Failed!', message: e.toString());

@@ -33,29 +33,27 @@ class AllProductController extends GetxController {
     final sortOption = option.toString();
     this.sortOption.value = sortOption;
 
-    switch(sortOption){
+    switch (sortOption) {
       case 'Name':
-        products.sort((a,b)=>a.title.compareTo(b.title));
+        products.sort((a, b) => a.title.compareTo(b.title));
       case 'Newest':
-        products.sort((a,b)=>a.date!.compareTo(b.date!));
+        products.sort((a, b) => b.date!.compareTo(a.date!));
       case 'Higher Price':
-        products.sort((a,b)=>b.price.compareTo(a.price));
+        products.sort((a, b) => b.price.compareTo(a.price));
       case 'Lower Price':
-        products.sort((a,b)=>a.price.compareTo(b.price));
+        products.sort((a, b) => a.price.compareTo(b.price));
       case 'Sale':
-        products.sort((a,b){
-          if(b.salePrice>0) {
+        products.sort((a, b) {
+          if (b.salePrice > 0) {
             return b.salePrice.compareTo(a.salePrice);
-          }
-          else if(a.salePrice>0){
+          } else if (a.salePrice > 0) {
             return -1;
-          }
-          else{
+          } else {
             return 1;
           }
         });
       default:
-          products.sort((a,b)=>a.title.compareTo(b.title));
+        products.sort((a, b) => a.title.compareTo(b.title));
     }
   }
 

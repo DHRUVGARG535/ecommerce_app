@@ -31,7 +31,6 @@ class BannerRepository extends GetxController {
 
         await _db.collection(UKeys.bannerCollection).doc().set(banner.toJson());
 
-        print('Banner Uploade: ${banner.targetScreen}');
       }
     } on FirebaseException catch (e) {
       throw UFirebaseException(e.code).message;
@@ -55,7 +54,6 @@ class BannerRepository extends GetxController {
             .map((banner) => BannerModel.fromDocument(banner))
             .toList();
 
-            print(banners.length);
         return banners;
         
       }

@@ -7,6 +7,7 @@ import 'package:ecommerce_app/common/widgets/shapes/rounded_container.dart';
 import 'package:ecommerce_app/common/widgets/text_fields/promocode.dart';
 import 'package:ecommerce_app/features/shop/controllers/cart/cart_controller.dart';
 import 'package:ecommerce_app/features/shop/controllers/checkout/checkout_controller.dart';
+import 'package:ecommerce_app/features/shop/controllers/promocode/promocode_controller.dart';
 import 'package:ecommerce_app/features/shop/screens/checkout/widgets.dart/address_section.dart';
 import 'package:ecommerce_app/features/shop/screens/checkout/widgets.dart/amount_section.dart';
 import 'package:ecommerce_app/features/shop/screens/checkout/widgets.dart/payment_section.dart';
@@ -17,7 +18,6 @@ import 'package:ecommerce_app/utils/popups/snackbar_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/state_manager.dart';
-import 'package:get/utils.dart';
 
 class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({super.key});
@@ -25,15 +25,16 @@ class CheckoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final checkoutController = Get.put(CheckoutController());
-    final controller = CartController.instance; 
+    final controller = CartController.instance;
     double subTotal = controller.totalCartPrice.value;
+    final promocodeController = Get.put(PromocodeController());
 
     final total = UPricingCalculator.calculateTotalPrice(
       controller.totalCartPrice.value,
       'India',
     );
     return Obx(
-      ()=>UPartialScreenLoading(
+      () => UPartialScreenLoading(
         isLoading: checkoutController.isLoading.value,
         child: Scaffold(
           appBar: UAppBar(
@@ -75,18 +76,27 @@ class CheckoutScreen extends StatelessWidget {
               ),
             ),
           ),
-          bottomNavigationBar: Padding(
-            padding: UPadding.screenPadding,
-            child: UElevatedButton(
-              func: subTotal > 0
-                  ? () => checkoutController.checkout(total)
-                  : () => USnackBarHelpers.errorSnackBar(
-                      title: 'Empty Cart',
-                      message: 'Add items to cart',
-                    ),
-              child: Text('Checkout ${UTexts.currency}${total.toStringAsFixed(2)}'),
-            ),
-          ),
+          bottomNavigationBar: Obx(() {
+            final promocode = promocodeController.appliedPromocode.value;
+            final totalPrice = promocodeController.discountCalculate(
+              promocode,
+              total,
+            );
+            return Padding(
+              padding: UPadding.screenPadding,
+              child: UElevatedButton(
+                func: subTotal > 0
+                    ? () => checkoutController.checkout(total)
+                    : () => USnackBarHelpers.errorSnackBar(
+                        title: 'Empty Cart',
+                        message: 'Add items to cart',
+                      ),
+                child: Text(
+                  'Checkout ${UTexts.currency}${totalPrice.toStringAsFixed(2)}',
+                ),
+              ),
+            );
+          }),
         ),
       ),
     );

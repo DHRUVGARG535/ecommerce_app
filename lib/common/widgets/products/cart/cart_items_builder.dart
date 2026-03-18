@@ -13,20 +13,31 @@ class UCartItemsBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = CartController.instance;
+    return Obx(() {
+    final items = controller.cartItems;
+
+    if (items.isEmpty) {
+      return const Center(child: Text("Cart is empty"));
+    }
+
     return ListView.separated(
       shrinkWrap: true,
-  physics: NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) => Obx(() {
-        final cartItem = controller.cartItems[index];
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        final cartItem = items[index];
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-
           children: [
             UCartItem(cartItem: cartItem),
+
             if (showQuantityAddRemove) ...[
-              SizedBox(height: USizes.spaceBtwSections / 1.5),
+              const SizedBox(height: USizes.spaceBtwSections / 1.5),
+
               UProductQuanityWithAddRemove(
-                price: (cartItem.price * cartItem.quantity).toStringAsFixed(0) ,
+                price: (cartItem.price * cartItem.quantity)
+                    .toStringAsFixed(0),
                 quantity: cartItem.quantity,
                 add: () => controller.addOneToCart(cartItem),
                 remove: () => controller.removeOneFromCart(cartItem),
@@ -34,10 +45,10 @@ class UCartItemsBuilder extends StatelessWidget {
             ],
           ],
         );
-      }),
+      },
       separatorBuilder: (context, index) =>
-          SizedBox(height: USizes.spaceBtwSections),
-      itemCount: controller.cartItems.length,
+          const SizedBox(height: USizes.spaceBtwSections),
     );
+  });
   }
 }

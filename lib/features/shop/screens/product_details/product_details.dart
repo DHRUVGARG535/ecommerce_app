@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/common/widgets/buttons/uelevated_button.dart';
 import 'package:ecommerce_app/common/widgets/texts/section_heading.dart';
+import 'package:ecommerce_app/features/shop/controllers/cart/cart_controller.dart';
 import 'package:ecommerce_app/features/shop/models/product_model.dart';
 import 'package:ecommerce_app/features/shop/screens/product_details/widgets/bottom_addto_cart.dart';
 import 'package:ecommerce_app/features/shop/screens/product_details/widgets/prdouct_thumnail_slider.dart';
@@ -19,22 +20,25 @@ class ProductDetailsScreen extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
+          
           children: [
             UProductThumbnailAndSlider(product: product),
 
             ProductMetaData(product: product),
 
-            if (product.productAttributes != null && product.productAttributes!.isNotEmpty) ProductAttributes(
-
-              product: product,
-            ),
+            if (product.productAttributes != null &&
+                product.productAttributes!.isNotEmpty)
+              ProductAttributes(product: product),
 
             SizedBox(height: USizes.spaceBtwItems),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: USizes.defaultSpace),
               child: Column(
                 children: [
-                  UElevatedButton(child: Text('Checkout'), func: () {}),
+                  UElevatedButton(
+                    child: Text('Checkout'),
+                    func: () => CartController.instance.directCheckout(product),
+                  ),
                   SizedBox(height: USizes.spaceBtwItems),
 
                   USectionHeading(
@@ -64,7 +68,7 @@ class ProductDetailsScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomAddToCart(product: product,),
+      bottomNavigationBar: BottomAddToCart(product: product),
     );
   }
 }

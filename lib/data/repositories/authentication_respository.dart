@@ -45,7 +45,7 @@ class AuthenticationRepository extends GetxController {
       localStorage.writeIfNull('firstTime', true);
       localStorage.read('firstTime') == false
           ? Get.offAll(Login())
-          : Get.to(Onboarding());
+          : Get.offAll(Onboarding());
     }
   }
 

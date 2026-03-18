@@ -31,7 +31,7 @@ class PaymentSection extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: USizes.xs+2),
                 radius: USizes.borderRadiusLg,
                 showBorder: false,
-                backgroundColor: dark ? UColors.darkerGrey : UColors.light,
+                backgroundColor: dark ? UColors.light : UColors.light,
                 child: Image(
                   image: AssetImage(controller.paymentMethod.value.image),
                 ),

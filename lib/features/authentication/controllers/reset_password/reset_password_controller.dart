@@ -37,15 +37,21 @@ class ResetPasswordController extends GetxController {
       );
 
       UFullScreenLoader.stopLoading();
-      Get.to(ResetPasswordScreen(email : email.text));
+      Get.to(ResetPasswordScreen(email: email.text));
       USnackBarHelpers.successSnackBar(
         title: 'Email Sent',
         message: 'An Email has been sent to reset your password',
       );
-    } catch (e) {}
+    } catch (e) {
+      
+      UFullScreenLoader.stopLoading();
+      USnackBarHelpers.errorSnackBar(
+        title: 'Cannot reset password',
+        message: e.toString(),
+      );
+    }
   }
 
-  
   Future<void> resendPasswordResetEmail() async {
     try {
       UFullScreenLoader.openLoadingDialog(
@@ -59,17 +65,23 @@ class ResetPasswordController extends GetxController {
         return;
       }
 
-
       await AuthenticationRepository.instance.sendPasswordResetEmail(
         email.text,
       );
 
       UFullScreenLoader.stopLoading();
-      
+
       USnackBarHelpers.successSnackBar(
         title: 'Email Sent',
         message: 'An Email has been sent to reset your password',
       );
-    } catch (e) {}
+    } catch (e) {
+
+  UFullScreenLoader.stopLoading();
+      USnackBarHelpers.errorSnackBar(
+        title: 'Cannot reset password',
+        message: e.toString(),
+      );
+    }
   }
 }

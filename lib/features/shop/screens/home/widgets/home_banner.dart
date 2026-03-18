@@ -38,6 +38,7 @@ class HomeBanner extends StatelessWidget {
               items: banner
                   .map(
                     (banner) => URoundedImage(
+                      fit: BoxFit.cover,
                       onPressed: ()=>Get.toNamed(banner.targetScreen),
                       imageUrl: banner.imageUrl,
                       isNetworkImage: true,
